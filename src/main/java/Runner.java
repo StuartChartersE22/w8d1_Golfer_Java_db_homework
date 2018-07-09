@@ -12,6 +12,10 @@ public class Runner {
         Golfer golfer = new Golfer("John", "Billson", 47);
         DBGolfer.save(golfer);
 
+        List<Golfer> golfers = DBGolfer.getAll();
+
+        System.out.println(golfers);
+
         System.exit(0);
     }
 }
