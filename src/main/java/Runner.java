@@ -17,6 +17,8 @@ public class Runner {
 
         System.out.println(golfers);
 
+        List<Golfer> orderedGolfers = DBGolfer.orderByAge();
+
         System.exit(0);
     }
 }
