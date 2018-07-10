@@ -13,6 +13,7 @@ public class Runner {
         DBGolfer.save(golfer);
 
         List<Golfer> golfers = DBGolfer.getAll();
+        Golfer foundGolfer = DBGolfer.find(golfer.getId());
 
         System.out.println(golfers);
 
