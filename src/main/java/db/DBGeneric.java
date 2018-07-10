@@ -1,7 +1,6 @@
 package db;
 
 import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -14,7 +13,7 @@ public abstract class DBGeneric {
     private static Session session;
     private static Transaction transaction;
 
-    public static <T extends Object> void save(T object){
+    public static void save(Object object){
         session = HibernateUtil.getSessionFactory().openSession();
 
         try{transaction = session.beginTransaction();
