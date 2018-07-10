@@ -1,5 +1,6 @@
 package db;
 
+import models.Golfer;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -24,6 +25,21 @@ public abstract class DBGeneric {
         } finally {
             session.close();
         }
+    }
+
+    protected static <T extends Object> List<T> getAll(Class<T> searchingClass){
+        List<T> results = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+
+        try {
+            Criteria cr = session.createCriteria(searchingClass);
+            results = cr.list();
+        } catch(HibernateException e){
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return results;
     }
 
 }
