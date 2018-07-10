@@ -4,7 +4,7 @@ import models.Golfer;
 
 import java.util.List;
 
-public class DBGolfer extends DBGeneric {
+public class DBGolfer extends DBHelper {
 
     public static List<Golfer> getAll(){
         return getAll(Golfer.class);

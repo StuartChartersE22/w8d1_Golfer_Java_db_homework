@@ -1,6 +1,7 @@
 package db;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
@@ -8,7 +9,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-public abstract class DBGeneric {
+public abstract class DBHelper {
 
     private static Session session;
     private static Transaction transaction;
@@ -78,6 +79,23 @@ public abstract class DBGeneric {
         }finally{
             session.close();
         }
+        return results;
+    }
+
+    protected static <T,R> List<T> findManyListToOne(R oneObject, Class<T> manyObjectClass, String manyColumnReletionshipTitle){
+        session = HibernateUtil.getSessionFactory().openSession();
+        List<T> results = null;
+
+        try {
+            Criteria cr = session.createCriteria(manyObjectClass);
+            cr.add(Restrictions.eq(manyColumnReletionshipTitle, oneObject));
+            results = cr.list();
+        }catch (HibernateException e){
+            e.printStackTrace();
+        }finally {
+            session.close();
+        }
+
         return results;
     }
 
