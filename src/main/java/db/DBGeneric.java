@@ -4,6 +4,7 @@ import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
@@ -34,7 +35,8 @@ public abstract class DBGeneric {
         try {
             Criteria cr = session.createCriteria(searchingClass);
             results = cr.list();
-        } catch(HibernateException e){
+        } catch(Throwable e){
+            transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
@@ -51,12 +53,33 @@ public abstract class DBGeneric {
             cr.add(Restrictions.eq("id", id));
             result = (T) cr.uniqueResult();
         } catch(Throwable e){
+            transaction.rollback();
             e.printStackTrace();
         } finally {
             session.close();
         }
 
         return result;
+    }
+
+    protected static <T extends Object> List<T> orderByCriterion(String columnName, Class<T> searchingClass, boolean isAscending){
+        List<T> results = null;
+        session = HibernateUtil.getSessionFactory().openSession();
+        try{
+            Criteria cr = session.createCriteria(searchingClass);
+            if(isAscending){
+                cr.addOrder(Order.asc(columnName));
+            }else {
+                cr.addOrder(Order.desc(columnName));
+            }
+            results = cr.list();
+        }catch (Throwable e){
+            transaction.rollback();
+            e.printStackTrace();
+        }finally{
+            session.close();
+        }
+        return results;
     }
 
 }

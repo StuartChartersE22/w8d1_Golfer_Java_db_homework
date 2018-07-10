@@ -8,11 +8,11 @@
         <property name="hbm2ddl.auto">create</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
 
-        <!--CHANGE DB NAME-->
+        <!--CHANGE DB NAME BELOW-->
 
         <property name="connection.url">jdbc:postgresql://localhost/golferdb</property>
 
-        <!--CHANGE DB NAME-->
+        <!--CHANGE DB NAME ABOVE-->
 
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</property>
         <property name="connection.pool_size">1</property>
